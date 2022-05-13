@@ -4,7 +4,7 @@
 /*
 
 Asterisk Voicemail Transcribe Wrapper
-Version: 0.5
+Version: 0.5.1
 Date: 5/13/2022
 License:  This work is licensed under CC BY-SA 4.0
 URL: https://git.sosdg.org/brielle/asterisk-scripts
@@ -47,9 +47,9 @@ if (isset($wavFile)) {
     curl_setopt_array($submitWatsonSTT, array(
         CURLOPT_CONNECTTIMEOUT => '15',
         CURLOPT_TIMEOUT => '120',
-	    CURLOPT_URL => $apiURL.$apiURLRecognize,
-	    CURLOPT_RETURNTRANSFER => TRUE,
-	    CURLOPT_CUSTOMREQUEST => 'POST',
+	CURLOPT_URL => $apiURL.$apiURLRecognize,
+	CURLOPT_RETURNTRANSFER => TRUE,
+	CURLOPT_CUSTOMREQUEST => 'POST',
         CURLOPT_USERPWD => 'apikey:'.$apiKey,
         CURLOPT_HTTPHEADER => array( 'Content-Type: audio/wav' ),
         CURLOPT_POSTFIELDS => $wavFile
@@ -74,8 +74,8 @@ $headers = array(
     "To"                    => $mailData['headers']['to'],
     "Subject"               => $mailData['headers']['subject'],
     "Message-ID"            => $mailData['headers']['message-id'],
-    'X-Asterisk-CallerID'   => $mailData['headers']['x-asterisk-callerid'],
-    'X-Asterisk-CallerIDName'   =>      $mailData['headers']['x-asterisk-calleridname'],
+    "X-Asterisk-CallerID"   => $mailData['headers']['x-asterisk-callerid'],
+    "X-Asterisk-CallerIDName"   =>      $mailData['headers']['x-asterisk-calleridname'],
 );
 
 $sendMimeMail = new Mail_mime();

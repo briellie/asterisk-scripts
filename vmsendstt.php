@@ -4,11 +4,12 @@
 /*
 
 Asterisk Voicemail Transcribe Wrapper
-Version: 0.5.1
+Version: 0.6.0
 Date: 5/13/2022
 License:  This work is licensed under CC BY-SA 4.0
 URL: https://git.sosdg.org/brielle/asterisk-scripts
 Requires:  PHP 5 or 7, Mail and Mail_Mime libraries from Pear
+Tested With: PHP 7.4
 Written by:  Brie Bruns <bruns@2mbit.com>
 
 Uses IBM's Watson Speech to Text API interface.  Not pretty with
@@ -47,9 +48,9 @@ if (isset($wavFile)) {
     curl_setopt_array($submitWatsonSTT, array(
         CURLOPT_CONNECTTIMEOUT => '15',
         CURLOPT_TIMEOUT => '120',
-	CURLOPT_URL => $apiURL.$apiURLRecognize,
-	CURLOPT_RETURNTRANSFER => TRUE,
-	CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_URL => $apiURL.$apiURLRecognize,
+        CURLOPT_RETURNTRANSFER => TRUE,
+        CURLOPT_CUSTOMREQUEST => 'POST',
         CURLOPT_USERPWD => 'apikey:'.$apiKey,
         CURLOPT_HTTPHEADER => array( 'Content-Type: audio/wav' ),
         CURLOPT_POSTFIELDS => $wavFile
@@ -77,6 +78,26 @@ $headers = array(
     "X-Asterisk-CallerID"   => $mailData['headers']['x-asterisk-callerid'],
     "X-Asterisk-CallerIDName"   =>      $mailData['headers']['x-asterisk-calleridname'],
 );
+
+if ($isset($mailData['headers']['cc'])) {
+    $headers['Cc'] = $mailData['headers']['cc'];
+}
+
+if ($isset($mailData['headers']['bcc'])) {
+    $headers['Bcc'] = $mailData['headers']['bcc'];
+}
+
+if ($isset($mailData['headers']['reply-to'])) {
+    $headers['Reply-To'] = $mailData['headers']['reply-to'];
+}
+
+if ($isset($mailData['headers']['user-agent'])) {
+    $headers['User-Agent'] = $mailData['headers']['user-agent'];
+}
+
+if ($isset($mailData['headers']['content-language'])) {
+    $headers['Content-Language'] = $mailData['headers']['content-language'];
+}
 
 $sendMimeMail = new Mail_mime();
 $sendMimeMail->setTXTBody($textMsg);

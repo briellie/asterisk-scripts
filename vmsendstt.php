@@ -4,8 +4,8 @@
 /*
 
 Asterisk Voicemail Transcribe Wrapper
-Version: 0.6.0
-Date: 5/13/2022
+Version: 0.6.1
+Date: 5/18/2022
 License:  This work is licensed under CC BY-SA 4.0
 URL: https://git.sosdg.org/brielle/asterisk-scripts
 Requires:  PHP 5 or 7, Mail and Mail_Mime libraries from Pear
@@ -70,7 +70,6 @@ if (isset($wavFile)) {
 
 $headers = array(
     "Date"                  => $mailData['headers']['date'],
-    "Return-Path"           => $mailData['headers']['return-path'],
     "From"                  => $mailData['headers']['from'],
     "To"                    => $mailData['headers']['to'],
     "Subject"               => $mailData['headers']['subject'],
@@ -79,23 +78,23 @@ $headers = array(
     "X-Asterisk-CallerIDName"   =>      $mailData['headers']['x-asterisk-calleridname'],
 );
 
-if ($isset($mailData['headers']['cc'])) {
+if (isset($mailData['headers']['cc'])) {
     $headers['Cc'] = $mailData['headers']['cc'];
 }
 
-if ($isset($mailData['headers']['bcc'])) {
+if (isset($mailData['headers']['bcc'])) {
     $headers['Bcc'] = $mailData['headers']['bcc'];
 }
 
-if ($isset($mailData['headers']['reply-to'])) {
+if (isset($mailData['headers']['reply-to'])) {
     $headers['Reply-To'] = $mailData['headers']['reply-to'];
 }
 
-if ($isset($mailData['headers']['user-agent'])) {
+if (isset($mailData['headers']['user-agent'])) {
     $headers['User-Agent'] = $mailData['headers']['user-agent'];
 }
 
-if ($isset($mailData['headers']['content-language'])) {
+if (isset($mailData['headers']['content-language'])) {
     $headers['Content-Language'] = $mailData['headers']['content-language'];
 }
 
